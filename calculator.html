@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    
+    <link rel="stylesheet" href="/layout.css">
+    <script>
+        var operandChain = [];
+        var operationChain = [];
+
+        var currentOperand = 0;
+        var currentOperation = 0;
+
+        function appendNum(e) {
+            operandChain[currentOperand] = (operandChain[currentOperand] ? operandChain[currentOperand] : "") + e.target.value;
+            document.getElementById("result").value = operandChain[currentOperand];
+        }
+
+        function setOperation(e) {
+            currentOperand++;
+            operationChain[currentOperation] = e.target.value;
+            currentOperation++;
+        }
+
+        function resolveAnswer(e) {
+            var answer = Number(operandChain[0]);
+            for (var i = 1; i < operandChain.length; i++) {
+                switch(operationChain[i-1]){
+                    case "+":
+                        answer = answer + Number(operandChain[i]);
+                        break;
+                    case "-":
+                        answer = answer - Number(operandChain[i]);
+                        break;
+                    case "*":
+                        answer = answer * Number(operandChain[i]);
+                        break;
+                    case "/":
+                        answer = answer / Number(operandChain[i]);
+                        break;
+
+                }
+            }
+            document.getElementById("result").value = answer;
+        }
+    </script>
+
+<head>
+    
+</head>
+<body>
+    <div>
+        <div class="header">
+            <input id="result" disabled />
+        </div>
+        <div class="numberFields">
+            <input onclick="appendNum(event)" type="button" value=1 />
+            <input onclick="appendNum(event)" type="button" value=2 />
+            <input onclick="appendNum(event)" type="button" value=3 />
+            <input onclick="appendNum(event)" type="button" value=4 />
+            <input onclick="appendNum(event)" type="button" value=5 />
+            <input onclick="appendNum(event)" type="button" value=6 />
+            <input onclick="appendNum(event)" type="button" value=7 />
+            <input onclick="appendNum(event)" type="button" value=8 />
+            <input onclick="appendNum(event)" type="button" value=9 />
+            <input onclick="appendNum(event)" type="button" value=0 />
+        </div>
+        <div class="operations">
+            <input onclick="setOperation(event)" type="button" value="+" />
+            <input onclick="setOperation(event)" type="button" value="-" />
+            <input onclick="setOperation(event)" type="button" value="*" />
+            <input onclick="setOperation(event)" type="button" value="/" />
+        </div>
+        <div class="sum">
+            <input type="submit" name="submit" onclick="resolveAnswer(event)" />
+        </div>
+    </div>
+</body>
+</html>
